@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import { test, moduleForComponent } from 'ember-qunit';
-import { generateContent, sortElementsByPosition } from '../helpers/helpers';
+import { checkContent, generateContent, sortElementsByPosition } from '../helpers/helpers';
 import template from '../templates/fixed-grid';
 
 var content = generateContent(5);
@@ -25,6 +25,7 @@ test("base case", function(assert) {
     this.set('width', 150);
   });
   assert.equal(this.$('.ember-collection').prop('scrollTop'), 0);
+  checkContent(this, assert, 0, 5);
 });
 
 test("scroll but within content length", function(assert){
@@ -47,6 +48,7 @@ test("scroll but within content length", function(assert){
   assert.equal(
     Ember.$(positionSorted[0]).text().trim(), 
     "Item 1", "The first item is not visible but in buffer.");
+  checkContent(this, assert, 0, 5);
 });
 
 test("scroll within content length, beyond buffer", function(assert){
@@ -76,6 +78,7 @@ test("scroll within content length, beyond buffer", function(assert){
   assert.equal(
     Ember.$(positionSorted[0]).text().trim(), 
     "Item 1", "The first item is in buffer again.");
+  checkContent(this, assert, 0, 5);
 });
 
 test("scroll but beyond content length", function(assert) {
@@ -92,4 +95,5 @@ test("scroll but beyond content length", function(assert) {
     this.set('width', 150);
   });
   assert.equal(this.$('.ember-collection').prop('scrollTop'), 0);
+  checkContent(this, assert, 0, 5);
 });
